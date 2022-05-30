@@ -303,7 +303,7 @@ namespace FancyCandles
                     drawingContext.DrawLine(cndlPen, new Point(cndlLeftX, wnd_O), new Point(cndlLeftX + CandleWidthAndGap.Width, wnd_O));
             }
 
-            for (int i = 0; i < Indicators.Count; i++)
+            for (int i = 0; i < Indicators?.Count; i++)
                 Indicators[i].OnRender(drawingContext, VisibleCandlesRange, VisibleCandlesExtremums, CandleWidthAndGap.Width, CandleWidthAndGap.Gap, RenderSize.Height);
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
@@ -316,15 +316,27 @@ namespace FancyCandles
             Point mousePos = e.GetPosition(this);
             //Vector uv = new Vector(mousePos.X/ RenderSize.Width, mousePos.Y / RenderSize.Height);
             int cndl_i = VisibleCandlesRange.Start_i + (int)(mousePos.X / (CandleWidthAndGap.Width + CandleWidthAndGap.Gap));
+            if (cndl_i < 0) cndl_i = 0;
+            if (cndl_i > CandlesSource.Count - 1) cndl_i = CandlesSource.Count - 1;
             ICandle cndl = CandlesSource[cndl_i];
             string strO = MyNumberFormatting.PriceToString(cndl.O, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
             string strH = MyNumberFormatting.PriceToString(cndl.H, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
             string strL = MyNumberFormatting.PriceToString(cndl.L, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
             string strC = MyNumberFormatting.PriceToString(cndl.C, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
+
+
+            string strOCPct = cndl.O != 0 ? MyNumberFormatting.PriceToString((cndl.C - cndl.O) / cndl.O * 100, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray) : "NA";
+
+            string strHLPct = cndl.L != 0 ? MyNumberFormatting.PriceToString(Math.Abs(cndl.H - cndl.L) / cndl.O * 100, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray) : "NA";
+
+            
+
             string strV = MyNumberFormatting.VolumeToString(cndl.V, Culture, decimalSeparator, decimalSeparatorArray);
             string strT = cndl.t.ToString((CandlesSource.TimeFrame < 0) ? "G" : "g", Culture);
-            string tooltipText = $"{strT}\nO= {strO}\nH= {strH}\nL= {strL}\nC= {strC}\nV= {strV}";
+            string tooltipText = $"{strT}\nO= {strO}\nH= {strH}\nL= {strL}\nC= {strC}\nV= {strV}\nPct= {strOCPct}\nPCT= {strHLPct}";
+            ((ToolTip)ToolTip).FontSize = 12;
             ((ToolTip)ToolTip).Content = tooltipText;
+            
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------------------------------

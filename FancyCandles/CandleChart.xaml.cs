@@ -126,6 +126,8 @@ namespace FancyCandles
             string overlayIndicatorArrayJson = SerializeToJson(OverlayIndicators);
             RecordAllUndoableProperties();
 
+            var popup1 = new Window1(this);
+
             CandleChartPropertiesWindow popup = new CandleChartPropertiesWindow(this);
             if (popup.ShowDialog() == true)
             {
@@ -482,7 +484,12 @@ namespace FancyCandles
             if (OverlayIndicators == null) return;
 
             for (int i = 0; i < OverlayIndicators.Count; i++)
+            {
+              //  OverlayIndicators[i].TradePositions = CandlesSource.TradePositions;
+                OverlayIndicators[i].IndicatorInfos = CandlesSource.IndicatorInfos;
+
                 OverlayIndicators[i].CandlesSource = CandlesSource;
+            }
         }
 
         private FancyPrimitives.RelayCommand removeOverlayIndicatorCommand;
@@ -569,6 +576,9 @@ namespace FancyCandles
                       OverlayIndicator overlayIndicator = (OverlayIndicator)Activator.CreateInstance(overlayIndicatorType);
                       OverlayIndicators.Add(overlayIndicator);
                       OverlayIndicator addedOverlayIndicator = OverlayIndicators[OverlayIndicators.Count - 1];
+
+              //        addedOverlayIndicator.TradePositions = CandlesSource.TradePositions;
+                      addedOverlayIndicator.IndicatorInfos = CandlesSource.IndicatorInfos;
                       addedOverlayIndicator.CandlesSource = CandlesSource;
                   }));
             }
@@ -2540,6 +2550,25 @@ namespace FancyCandles
         private void OnMouseMoveInsidePriceChartContainer(object sender, MouseEventArgs e)
         {
             CurrentMousePosition = Mouse.GetPosition(priceChartContainer);
+        }
+
+        System.Windows.Point? PanStartPoint = null;
+
+        public void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)|| Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                PanStartPoint = Mouse.GetPosition(priceChartContainer);
+            }
+        }
+        public void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (PanStartPoint!=null &&( Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+               double PanX = Mouse.GetPosition(priceChartContainer).X - ((Point)PanStartPoint).X;
+            }
+
+            PanStartPoint = null;
         }
 
         private void OnMouseMoveInsideVolumeHistogramContainer(object sender, MouseEventArgs e)

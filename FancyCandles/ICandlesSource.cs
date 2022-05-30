@@ -27,6 +27,11 @@ namespace FancyCandles
         ///<summary>Gets the time frame of the candle collection.</summary>
         ///<value>The time frame of the candle collection.</value>
         TimeFrame TimeFrame { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+//        IList<ITradePosition> TradePositions { get; }
+        List<IIndicatorInfoSet> IndicatorInfos { get; }
     }
 
     ///<summary>Represents a collection of candles obtained from <see cref="ICandlesSourceProvider"/>, that can be used as a value for the <see cref="CandleChart.CandlesSource"/> property of the <see cref="CandleChart"/> class.</summary>

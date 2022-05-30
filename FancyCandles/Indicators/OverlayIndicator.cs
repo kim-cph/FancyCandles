@@ -99,6 +99,11 @@ namespace FancyCandles.Indicators
                 ReCalcAllIndicatorValues();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        public List<IIndicatorInfoSet> IndicatorInfos { get; set; }
 
         private void OnCandlesSourceChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

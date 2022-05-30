@@ -101,7 +101,7 @@ namespace FancyCandles
             IEnumerable<System.Type> allIndicatorTypes = fancyCandlesAssemblyIndicatorTypes.Union(entryAssemblyIndicatorTypes, indicatorComparer);
 
             string fullAddInIndicatorsFolder = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, addInIndicatorsFolder);
-            var allowedExtensions = new[] { ".dll", ".exe" };
+            var allowedExtensions = new[] { ".dll"}; //  the .exe file generated in a .NET Core 3.0 application is not an IL assembly
             List<string> addInAssemblyFileNames;
             try
             {
@@ -112,12 +112,15 @@ namespace FancyCandles
                 addInAssemblyFileNames = new List<string>();
             }
 
-            foreach (string addInAssemblyFileName in addInAssemblyFileNames)
+            foreach (string addInAssemblyFileName in addInAssemblyFileNames) 
             {
-                string asmPath = System.IO.Path.Combine(fullAddInIndicatorsFolder, addInAssemblyFileName);
-                Assembly asm = Assembly.LoadFile(asmPath);
+                string asmPath = System.IO.Path.Combine(fullAddInIndicatorsFolder, addInAssemblyFileName);                
+                Assembly asm = Assembly.LoadFrom(asmPath); // had to change because faile to 
+                
                 IEnumerable<System.Type> asmIndicatorTypes = asm.GetTypes().Where(t => t.IsClass && t.IsSubclassOf(typeof(OverlayIndicator)) && !t.IsAbstract);
-                allIndicatorTypes = allIndicatorTypes.Union(asmIndicatorTypes, indicatorComparer);
+
+                if (asmIndicatorTypes.Any())
+                    allIndicatorTypes = allIndicatorTypes.Union(asmIndicatorTypes, indicatorComparer);
             }
 
             return allIndicatorTypes.ToArray();

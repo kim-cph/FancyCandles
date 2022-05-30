@@ -184,10 +184,13 @@
 
         <!-- Обертка для ItemsControl нужна для определения размеров. -->
         <Grid x:Name="priceChartContainer" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+              MouseLeftButtonDown="OnMouseLeftButtonDown"
+              MouseLeftButtonUp="OnMouseLeftButtonUp"
+              
               ClipToBounds="True"
               Style="{StaticResource rowSpanPriceChartIfVolumeDisabled}"
               SizeChanged="OnPanelCandlesContainerSizeChanged" MouseWheel="OnMouseWheel" MouseMove="OnMouseMoveInsidePriceChartContainer" Panel.ZIndex="2">
-
+            
             <!-- Нужно заполнить весь контейнер прозрачным содержимым, а иначе перекрестие не работает: -->
             <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Transparent">
                 <Rectangle.ContextMenu>
@@ -210,10 +213,12 @@
             </Rectangle>
 
             <local:PriceChartElement x:Name="priceChart" 
+                             
+                 
                 CandlesSource="{Binding ElementName=thisUserControl, Path=CandlesSource, Mode=OneWay}"
                 Culture="{Binding ElementName=thisUserControl, Path=Culture, Mode=OneWay}"
                 MaxNumberOfFractionalDigitsInPrice ="{Binding ElementName=thisUserControl, Path=MaxNumberOfFractionalDigitsInPrice, Mode=OneWay}"
-                Indicators="{Binding ElementName=thisUserControl, Path=OverlayIndicators,Mode=OneWay}"
+                Indicators="{Binding ElementName=thisUserControl, Path=OverlayIndicators,Mode=TwoWay}"
                 VisibleCandlesRange="{Binding ElementName=thisUserControl, Path=VisibleCandlesRange, Mode=OneWay}"
                 VisibleCandlesExtremums="{Binding ElementName=thisUserControl, Path=VisibleCandlesExtremums, Mode=OneWay}"
                 BullishCandleFill="{Binding ElementName=thisUserControl, Path=BullishCandleFill, Mode=OneWay}"
