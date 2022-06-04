@@ -51,7 +51,7 @@ namespace FancyCandles
         }
     }
 #pragma warning restore CS1591
-
+#pragma warning  disable CS0659    
     /// <summary>Represents the extreme values of Price and Volume for a set of candlesticks.</summary>
     public struct CandleExtremums
     {
@@ -86,7 +86,18 @@ namespace FancyCandles
 #pragma warning  disable CS1591
         public override bool Equals(object obj) { return false; }
 #pragma warning restore CS1591
+
+
+
     }
+#pragma warning restore CS0659
+
+    public class CandleClickEventArgs:EventArgs
+    {
+
+    }
+    public delegate void  CandleClickEvent(object sender, CandleClickEventArgs e);
+
 
     /// <summary>Candlestick chart control derived from UserControl.</summary>
     [JsonObject(MemberSerialization.OptIn)]
@@ -121,6 +132,9 @@ namespace FancyCandles
             Loaded += new RoutedEventHandler(OnUserControlLoaded);
         }
         //----------------------------------------------------------------------------------------------------------------------------------
+
+        public event CandleClickEvent OnCandleClick;
+
         private void OpenCandleChartPropertiesWindow(object sender, RoutedEventArgs e)
         {
             string overlayIndicatorArrayJson = SerializeToJson(OverlayIndicators);
@@ -2554,9 +2568,15 @@ namespace FancyCandles
 
         System.Windows.Point? PanStartPoint = null;
 
-        public void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) //TODO onMouseLEftButtonDown
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)|| Keyboard.IsKeyDown(Key.RightCtrl))
+
+            if (OnCandleClick != null)
+            {
+   //             OnCandleClick(this, new CandleClickEventArgs() { });
+            }
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 PanStartPoint = Mouse.GetPosition(priceChartContainer);
             }

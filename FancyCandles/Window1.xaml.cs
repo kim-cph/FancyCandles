@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-/* 
+﻿/* 
     Copyright 2019 Dennis Geller.
 
     This file is part of FancyCandles.
@@ -19,27 +16,7 @@ using System.Linq;
     You should have received a copy of the GNU General Public License
     along with FancyCandles.  If not, see<https://www.gnu.org/licenses/>. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Markup;
-using System.IO;
-using System.Xml;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using FancyCandles.Indicators;
-using System.Reflection;
 
 namespace FancyCandles
 {
