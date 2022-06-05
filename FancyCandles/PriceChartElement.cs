@@ -307,6 +307,9 @@ namespace FancyCandles
                 Indicators[i].OnRender(drawingContext, VisibleCandlesRange, VisibleCandlesExtremums, CandleWidthAndGap.Width, CandleWidthAndGap.Gap, RenderSize.Height);
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
+        
+        public ICandle CandleInCross { get;private set; }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             string decimalSeparator = Culture.NumberFormat.NumberDecimalSeparator;
@@ -319,6 +322,7 @@ namespace FancyCandles
             if (cndl_i < 0) cndl_i = 0;
             if (cndl_i > CandlesSource.Count - 1) cndl_i = CandlesSource.Count - 1;
             ICandle cndl = CandlesSource[cndl_i];
+            CandleInCross = cndl;
             string strO = MyNumberFormatting.PriceToString(cndl.O, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
             string strH = MyNumberFormatting.PriceToString(cndl.H, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);
             string strL = MyNumberFormatting.PriceToString(cndl.L, priceNumberFormat, Culture, decimalSeparator, decimalSeparatorArray);

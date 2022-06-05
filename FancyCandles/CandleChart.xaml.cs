@@ -94,7 +94,7 @@ namespace FancyCandles
 
     public class CandleClickEventArgs:EventArgs
     {
-
+        public ICandle Candle { get; set; }
     }
     public delegate void  CandleClickEvent(object sender, CandleClickEventArgs e);
 
@@ -2568,12 +2568,15 @@ namespace FancyCandles
 
         System.Windows.Point? PanStartPoint = null;
 
+  
+
         public void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) //TODO onMouseLEftButtonDown
         {
 
             if (OnCandleClick != null)
             {
-   //             OnCandleClick(this, new CandleClickEventArgs() { });
+                
+                OnCandleClick(this, new CandleClickEventArgs() {Candle=priceChart.CandleInCross });
             }
 
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))

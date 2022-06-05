@@ -25,26 +25,26 @@ namespace FancyCandles
     {
         ///<summary>Gets the time of the candlestick.</summary>
         ///<value>The time of the candlestick.</value>
-        DateTime t { get; } // Момент времени включая дату и время
+        DateTime t { get; set; } // Момент времени включая дату и время
 
         ///<summary>Gets the Open of the candlestick (opening price).</summary>
         ///<value>The Open of the candlestick (opening price).</value>
-        double O { get;}
+        double O { get; set; }
 
         ///<summary>Gets the High of the candlestick (price maximum).</summary>
         ///<value>The High of the candlestick (price maximum).</value>
-        double H { get;}
+        double H { get; set; }
 
         ///<summary>Gets the Low of the candlestick (price minimum).</summary>
         ///<value>The Low of the candlestick (price minimum).</value>
-        double L { get;}
+        double L { get; set; }
 
         ///<summary>Gets the Close of the candlestick (closing price).</summary>
         ///<value>The Close of the candlestick (closing price).</value>
-        double C { get;}
+        double C { get; set; }
 
         ///<summary>Gets the Volume of the candlestick.</summary>
         ///<value>The Volume of the candlestick.</value>
-        double V { get;}
+        double V { get; set; }
     }
 }
